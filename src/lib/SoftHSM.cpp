@@ -89,6 +89,8 @@
 
 // Initialise the one-and-only instance
 
+int objects_deleted = 0;
+
 #ifdef HAVE_CXX11
 
 std::unique_ptr<MutexFactory> MutexFactory::instance(nullptr);
@@ -429,6 +431,7 @@ SoftHSM::SoftHSM()
 // Destructor
 SoftHSM::~SoftHSM()
 {
+
 	if (handleManager != NULL) delete handleManager;
 	handleManager = NULL;
 	if (sessionManager != NULL) delete sessionManager;
@@ -445,6 +448,7 @@ SoftHSM::~SoftHSM()
 
 	isInitialised = false;
 
+	objects_deleted = 1;
 	resetMutexFactoryCallbacks();
 }
 
